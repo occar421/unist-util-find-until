@@ -155,7 +155,7 @@ abide by its terms.
 [npm]: https://docs.npmjs.com/cli/install
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 [typescript]: https://www.typescriptlang.org
-[license]: license
+[license]: LICENSE
 [author]: https://github.com/occar421
 [health]: https://github.com/syntax-tree/.github
 [contributing]: https://github.com/syntax-tree/.github/blob/main/contributing.md
