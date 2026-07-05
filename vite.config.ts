@@ -1,10 +1,15 @@
 import { defineConfig } from "vite-plus";
 
 export default defineConfig({
-  pack: {
-    dts: {
-      tsgo: true,
+  staged: {
+    "*": "vp check --fix",
+  },
+  test: {
+    typecheck: {
+      enabled: true,
     },
+  },
+  pack: {
     exports: true,
   },
   lint: {
