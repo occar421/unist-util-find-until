@@ -1,48 +1,31 @@
 import { describe, expect, expectTypeOf, it } from "vite-plus/test";
 import { findUntil } from "../src/index.ts";
-import type { Node, Parent } from "unist";
-
-interface Heading extends Node {
-  type: "heading";
-  depth: number;
-  value: string;
-}
-
-interface Paragraph extends Node {
-  type: "paragraph";
-  children: (Node | Text)[];
-}
-
-interface Text extends Node {
-  type: "text";
-  value: string;
-}
-
-const heading0 = { type: "heading", depth: 1, value: "Title" } as Heading;
-const heading1 = { type: "heading", depth: 2, value: "Sub-Title1" } as Heading;
-const paragraph0 = { type: "paragraph", children: [{ type: "text", value: "alpha" }] } as Paragraph;
-const paragraph1 = { type: "paragraph", children: [{ type: "text", value: "bravo" }] } as Paragraph;
-const paragraph2 = {
-  type: "paragraph",
-  children: [{ type: "text", value: "charlie" }],
-} as Paragraph;
-const heading2 = { type: "heading", depth: 2, value: "Sub-Title2" } as Heading;
-const paragraph3 = { type: "paragraph", children: [{ type: "text", value: "delta" }] } as Paragraph;
-const paragraph4 = { type: "paragraph", children: [{ type: "text", value: "echo" }] } as Paragraph;
+import type { Heading, Paragraph, Root, RootContent } from "mdast";
 
 const tree = {
   type: "root",
   children: [
-    heading0,
-    heading1,
-    paragraph0,
-    paragraph1,
-    paragraph2,
-    heading2,
-    paragraph3,
-    paragraph4,
-  ] as (Heading | Paragraph)[],
-} as Parent;
+    { type: "heading", depth: 1, children: [{ type: "text", value: "Title" }] },
+    { type: "heading", depth: 2, children: [{ type: "text", value: "Sub-Title1" }] },
+    { type: "paragraph", children: [{ type: "text", value: "alpha" }] },
+    { type: "paragraph", children: [{ type: "text", value: "bravo" }] },
+    { type: "paragraph", children: [{ type: "text", value: "charlie" }] },
+    { type: "heading", depth: 2, children: [{ type: "text", value: "Sub-Title2" }] },
+    { type: "paragraph", children: [{ type: "text", value: "delta" }] },
+    { type: "paragraph", children: [{ type: "text", value: "echo" }] },
+  ],
+} as Root;
+
+const heading0 = tree.children[0];
+// @ts-ignore
+// oxlint-disable-next-line no-unused-vars
+const heading1 = tree.children[1];
+const paragraph0 = tree.children[2];
+const paragraph1 = tree.children[3];
+const paragraph2 = tree.children[4];
+const heading2 = tree.children[5];
+const paragraph3 = tree.children[6];
+const paragraph4 = tree.children[7];
 
 describe("findUntil", () => {
   describe("Validation", () => {
@@ -74,7 +57,7 @@ describe("findUntil", () => {
     });
 
     it("should throw if index is a node not in parent", () => {
-      expect(() => findUntil(tree, { type: "text" }, "paragraph")).toThrow(
+      expect(() => findUntil(tree, { type: "thematicBreak" }, "paragraph")).toThrow(
         "Expected child node or index",
       );
     });
@@ -82,12 +65,12 @@ describe("findUntil", () => {
 
   describe("Basic Functionality", () => {
     it("should find nodes until predicate is met (using index)", () => {
-      const result = findUntil(tree, 2, (node: Node) => node === paragraph3);
+      const result = findUntil(tree, 2, (node) => node === paragraph3);
       expect(result).toEqual([paragraph0, paragraph1, paragraph2, heading2]);
     });
 
     it("should find nodes until predicate is met (using child node)", () => {
-      const result = findUntil(tree, paragraph0, (node: Node) => node === paragraph3);
+      const result = findUntil(tree, paragraph0, (node) => node === paragraph3);
       expect(result).toEqual([paragraph0, paragraph1, paragraph2, heading2]);
     });
 
@@ -113,8 +96,8 @@ describe("findUntil", () => {
       const result = findUntil(
         tree,
         0,
-        (node: Node) => node === paragraph4,
-        (_node: Node, index) => typeof index === "number" && index % 2 === 0,
+        (node) => node === paragraph4,
+        (_node, index) => typeof index === "number" && index % 2 === 0,
       );
       expect(result).toEqual([heading0, paragraph0, paragraph2, paragraph3]);
     });
@@ -127,12 +110,12 @@ describe("findUntil", () => {
 
   describe("unist-util-is compatibility", () => {
     it("should work with string test (type)", () => {
-      const result = findUntil(tree, 2, (node: Node) => node === paragraph2, "paragraph");
+      const result = findUntil(tree, 2, (node) => node === paragraph2, "paragraph");
       expect(result).toEqual([paragraph0, paragraph1]);
     });
 
     it("should work with object test (partial properties)", () => {
-      const result = findUntil(tree, 2, (node: Node) => node === paragraph2, { type: "paragraph" });
+      const result = findUntil(tree, 2, (node) => node === paragraph2, { type: "paragraph" });
       expect(result).toEqual([paragraph0, paragraph1]);
     });
 
@@ -140,8 +123,8 @@ describe("findUntil", () => {
       const result = findUntil(
         tree,
         2,
-        (node: Node) => node === paragraph2,
-        (node: Node) => node.type === "paragraph",
+        (node) => node === paragraph2,
+        (node) => node.type === "paragraph",
       );
       expect(result).toEqual([paragraph0, paragraph1]);
     });
@@ -149,16 +132,23 @@ describe("findUntil", () => {
 
   describe("Types", () => {
     it("should have correct return type for number index", () => {
-      expectTypeOf(findUntil(tree, 0, "paragraph")).toEqualTypeOf<Node[]>();
+      let nodes = findUntil(tree, 0, "paragraph");
+      expectTypeOf(nodes).toEqualTypeOf<RootContent[]>();
     });
 
     it("should have correct return type for never matching test", () => {
-      expectTypeOf(findUntil(tree, 0, "paragraph", "paragraph")).toEqualTypeOf<never[]>();
+      let paragraphs = findUntil(tree, 0, "paragraph", "paragraph");
+      expectTypeOf(paragraphs).toEqualTypeOf<Paragraph[]>();
+    });
+
+    it("should have correct return type for matching test", () => {
+      let headings = findUntil(tree, 0, "paragraph", "heading");
+      expectTypeOf(headings).toEqualTypeOf<Heading[]>();
     });
 
     it("should have correct return type for node index", () => {
-      const paragraph = tree.children[0];
-      expectTypeOf(findUntil(tree, paragraph, "paragraph")).toEqualTypeOf<Node[]>();
+      let nodes = findUntil(tree, paragraph0, "paragraph");
+      expectTypeOf(nodes).toEqualTypeOf<RootContent[]>();
     });
   });
 });
