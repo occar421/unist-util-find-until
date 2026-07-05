@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "description": "utility to find nodes until condition met",
   "keywords": [
-    "until",
     "find",
     "node",
     "tree",
     "unist",
     "unist-util",
+    "until",
     "util",
     "utility"
   ],
