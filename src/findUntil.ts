@@ -4,8 +4,8 @@ import { convert } from "unist-util-is";
 export function findUntil<Kind extends Parent, Predicate extends Test, Filter extends Test>(
   parent: Kind,
   index: number | Child<Kind>,
-  predicate: Predicate,
-  test?: Filter,
+  untilPredicate: Predicate,
+  filterTest?: Filter,
 ): Array<Matches<Child<Kind>, Filter>> {
   if (!parent || !parent.type || !parent.children) {
     throw new Error("Expected parent node");
@@ -25,8 +25,8 @@ export function findUntil<Kind extends Parent, Predicate extends Test, Filter ex
     }
   }
 
-  const isPredicate = convert(predicate);
-  const isTest = test === undefined ? () => true : convert(test);
+  const isPredicate = convert(untilPredicate);
+  const isTest = filterTest === undefined ? () => true : convert(filterTest);
 
   const results: Node[] = [];
   for (let i = start_index; i < parent.children.length; i++) {
