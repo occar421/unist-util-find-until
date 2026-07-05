@@ -1,6 +1,6 @@
 {
   "name": "unist-util-find-until",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "utility to find nodes until condition met",
   "homepage": "https://github.com/occar421/unist-util-find-until#readme",
   "bugs": {
