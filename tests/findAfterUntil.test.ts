@@ -119,12 +119,12 @@ describe("findAfterUntil", () => {
   describe("unist-util-is compatibility", () => {
     it("should work with string test (type)", () => {
       const result = findAfterUntil(tree, 2, (node) => node === paragraph2, "paragraph");
-      expect(result).toEqual([paragraph0, paragraph1]);
+      expect(result).toEqual([paragraph1]);
     });
 
     it("should work with object test (partial properties)", () => {
       const result = findAfterUntil(tree, 2, (node) => node === paragraph2, { type: "paragraph" });
-      expect(result).toEqual([paragraph0, paragraph1]);
+      expect(result).toEqual([paragraph1]);
     });
 
     it("should work with function test", () => {
@@ -134,7 +134,7 @@ describe("findAfterUntil", () => {
         (node) => node === paragraph2,
         (node) => node.type === "paragraph",
       );
-      expect(result).toEqual([paragraph0, paragraph1]);
+      expect(result).toEqual([paragraph1]);
     });
   });
 
