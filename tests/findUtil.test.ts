@@ -148,10 +148,15 @@ describe("findUntil", () => {
   });
 
   describe("Types", () => {
-    it("should have correct return type", () => {
+    it("should have correct return type for number index", () => {
       expectTypeOf(findUntil(tree, 0, "paragraph")).toEqualTypeOf<Node[]>();
-      expectTypeOf(findUntil(tree, 0, "paragraph", "paragraph")).toEqualTypeOf<never[]>();
+    });
 
+    it("should have correct return type for never matching test", () => {
+      expectTypeOf(findUntil(tree, 0, "paragraph", "paragraph")).toEqualTypeOf<never[]>();
+    });
+
+    it("should have correct return type for node index", () => {
       const paragraph = tree.children[0];
       expectTypeOf(findUntil(tree, paragraph, "paragraph")).toEqualTypeOf<Node[]>();
     });
