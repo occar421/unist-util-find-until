@@ -2,6 +2,16 @@
   "name": "unist-util-find-until",
   "version": "0.1.0",
   "description": "utility to find nodes until condition met",
+  "keywords": [
+    "until",
+    "find",
+    "node",
+    "tree",
+    "unist",
+    "unist-util",
+    "util",
+    "utility"
+  ],
   "homepage": "https://github.com/occar421/unist-util-find-until#readme",
   "bugs": {
     "url": "https://github.com/occar421/unist-util-find-until/issues"
