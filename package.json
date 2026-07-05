@@ -27,6 +27,7 @@
     "build": "vp pack",
     "test": "vp test",
     "check": "vp check",
+    "check-with-fix": "vp check --fix",
     "ready": "vp run check && vp run test && vp run build",
     "prepare": "vp config",
     "release": "pnpm publish -r --no-git-checks",
