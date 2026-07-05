@@ -41,6 +41,7 @@
     "ready": "vp run check && vp run test && vp run build",
     "prepare": "vp config",
     "release": "pnpm publish -r --no-git-checks",
+    "publish": "changeset publish",
     "version": "changeset version",
     "bump-interactive": "changeset"
   },
