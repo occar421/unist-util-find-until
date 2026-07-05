@@ -1,6 +1,20 @@
 import type { Node, Parent } from "unist";
 import { convert, type Test } from "unist-util-is";
 
+/**
+ * Find nodes in `parent` starting from `index` until `untilPredicate` matches that pass `filterTest`.
+ *
+ * @param parent
+ *   Parent node.
+ * @param index
+ *   Child node or index.
+ * @param untilPredicate
+ *   Test for child to stop at.
+ * @param [filterTest]
+ *   Test for child to look for (optional).
+ * @returns
+ *   Children (matching `filterTest`, if given).
+ */
 export function findUntil<
   Kind extends Parent,
   PredicateCheck extends Test,
@@ -30,6 +44,20 @@ export function findUntil<
   return findUntilInternal(parent, index, untilPredicate, filterTest, false);
 }
 
+/**
+ * Find nodes in `parent` after `index` until `untilPredicate` matches that pass `filterTest`.
+ *
+ * @param parent
+ *   Parent node.
+ * @param index
+ *   Child node or index.
+ * @param untilPredicate
+ *   Test for child to stop at.
+ * @param [filterTest]
+ *   Test for child to look for (optional).
+ * @returns
+ *   Children (matching `filterTest`, if given).
+ */
 export function findAfterUntil<
   Kind extends Parent,
   PredicateCheck extends Test,
