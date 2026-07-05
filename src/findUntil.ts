@@ -1,12 +1,12 @@
 import type { Child, Matches, Node, Parent, Test } from "./types.ts";
 import { convert } from "unist-util-is";
 
-export function findUntil<Kind extends Parent, Check extends Test, Predicate extends Test>(
+export function findUntil<Kind extends Parent, Predicate extends Test, Filter extends Test>(
   parent: Kind,
   index: number | Child<Kind>,
   predicate: Predicate,
-  test?: Check,
-): Array<Matches<Child<Kind>, Check>> {
+  test?: Filter,
+): Array<Matches<Child<Kind>, Filter>> {
   if (!parent || !parent.type || !parent.children) {
     throw new Error("Expected parent node");
   }
@@ -41,5 +41,5 @@ export function findUntil<Kind extends Parent, Check extends Test, Predicate ext
     }
   }
 
-  return results as Array<Matches<Child<Kind>, Check>>;
+  return results as Array<Matches<Child<Kind>, Filter>>;
 }

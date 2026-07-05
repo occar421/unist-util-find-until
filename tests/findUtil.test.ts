@@ -114,7 +114,7 @@ describe("findUntil", () => {
         tree,
         0,
         (node: Node) => node === paragraph4,
-        (_node: Node, index: number) => index % 2 === 0,
+        (_node: Node, index) => typeof index === "number" && index % 2 === 0,
       );
       expect(result).toEqual([heading0, paragraph0, paragraph2, paragraph3]);
     });
