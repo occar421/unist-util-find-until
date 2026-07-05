@@ -1,10 +1,9 @@
 import type { Node, Parent } from "unist";
-import type { Test as UnistUtilIsTest } from "unist-util-is";
+export type { Test } from "unist-util-is";
 
 export type { Node, Parent };
 
 export type Child<Kind extends Node> = Kind extends Parent ? Kind["children"][number] : never;
-export type Test = Exclude<UnistUtilIsTest, undefined> | undefined;
 
 /**
  * Get the value of a type guard `Fn`.
