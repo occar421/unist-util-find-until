@@ -144,7 +144,7 @@ abide by its terms.
 
 [MIT][license] © [MasuqaT][author]
 
-[build-badge]: https://github.com/occar421/unist-util-find-until/workflows/main/badge.svg
+[build-badge]: https://github.com/occar421/unist-util-find-until/actions/workflows/main.yml/badge.svg
 [build]: https://github.com/occar421/unist-util-find-until/actions
 [coverage-badge]: https://img.shields.io/codecov/c/github/occar421/unist-util-find-until.svg
 [coverage]: https://codecov.io/github/occar421/unist-util-find-until
