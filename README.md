@@ -1,7 +1,6 @@
 # unist-util-find-until
 
 [![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
 [![Downloads][downloads-badge]][downloads]
 [![Size][size-badge]][size]
 
@@ -146,8 +145,6 @@ abide by its terms.
 
 [build-badge]: https://github.com/occar421/unist-util-find-until/actions/workflows/main.yml/badge.svg
 [build]: https://github.com/occar421/unist-util-find-until/actions
-[coverage-badge]: https://img.shields.io/codecov/c/github/occar421/unist-util-find-until.svg
-[coverage]: https://codecov.io/github/occar421/unist-util-find-until
 [downloads-badge]: https://img.shields.io/npm/dm/unist-util-find-until.svg
 [downloads]: https://www.npmjs.com/package/unist-util-find-until
 [size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=unist-util-find-until
