@@ -16,5 +16,5 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: vp-build-artifact
-          path: packages/*/dist
+          path: dist
           retention-days: 1
